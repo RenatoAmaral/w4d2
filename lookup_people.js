@@ -15,25 +15,31 @@ const famousePeople = require('./famouse-people')(client)
 
 
 client.connect((err) => {
+
   if (err) {
     return console.log('Something went wrong:', err)
   }
 
   // Using the function defined inside the artists module.
   famousePeople.findByName(process.argv[2], (err, result) => {
+    const rows = result.rows;
+
     if (err) {
       return console.log('Something went wrong:', err)
     }
-    console.log("Searching...");
-    const rows = result.rows;
-    console.log(rows)
-    console.log(`Found ${rows.length} person(s) by the name '${process.argv[2]}':`);
-    for(let row in rows ){
-      console.log(`- ${rows[row].id}: ${rows[row].first_name} ${rows[row].last_name}, born '${rows[row].birthdate.toLocaleDateString()}'`);
-    }
-    client.end(); // Closes the connection and exits the app
-  })
 
+    console.log("Searching...");
+    console.log(`Found ${rows.length} person(s) by the name '${process.argv[2]}':`);
+
+    for(let row in rows ){
+      let r = rows[row];
+      console.log(`- ${r.id}: ${r.first_name} ${r.last_name}, born '${r.birthdate.toLocaleDateString()}'`);
+    }
+
+  client.end(); // Closes the connection and exits the app
+
+  })
 });
+
 
 
