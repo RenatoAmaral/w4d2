@@ -26,8 +26,14 @@ client.connect((err) => {
     }
     console.log("Searching...");
     const rows = result.rows;
-    console.log(`Found ${rows.length} person(s) by the name '${process.argv[2]}':\n - ${rows[0].id}: ${rows[0].first_name} ${rows[0].last_name}, born '${rows[0].birthdate.toLocaleDateString()}'`);
+    console.log(rows)
+    console.log(`Found ${rows.length} person(s) by the name '${process.argv[2]}':`);
+    for(let row in rows ){
+      console.log(`- ${rows[row].id}: ${rows[row].first_name} ${rows[row].last_name}, born '${rows[row].birthdate.toLocaleDateString()}'`);
+    }
     client.end(); // Closes the connection and exits the app
-  });
+  })
 
 });
+
+
